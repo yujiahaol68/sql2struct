@@ -4,7 +4,7 @@ import (
 	"io"
 )
 
-const VERSION = "v0.0.1"
+const VERSION = "v0.0.2"
 
 func Run(src io.Reader, out io.Writer) {
 	blocks := matchStmt(src)
