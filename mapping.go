@@ -23,6 +23,7 @@ var (
 	camelStyle   = regexp.MustCompile(`[a-z][A-Z]`)
 
 	upperDict map[string]struct{}
+	metaTag   = []string{"db", "json"}
 )
 
 type table struct {
@@ -54,8 +55,10 @@ func init() {
 
 func (f field) String() string {
 	meta := make([]string, 0, len(f.MetaInfo))
-	for k, v := range f.MetaInfo {
-		meta = append(meta, fmt.Sprintf(`%s:"%s"`, k, strings.Join(v, ",")))
+	for _, tag := range metaTag {
+		if v, ok := f.MetaInfo[tag]; ok {
+			meta = append(meta, fmt.Sprintf(`%s:"%s"`, tag, strings.Join(v, ",")))
+		}
 	}
 
 	var fieldName string
